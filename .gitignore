@@ -1,0 +1,40 @@
+
+# Python virtual environments
+.conda/
+.venv/
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Hugging Face cache
+cache/
+.huggingface/
+
+# Datasets and large files
+data/
+datasets/
+*.parquet
+*.arrow
+*.tfrecord
+
+# Model weights and checkpoints
+checkpoints/
+outputs/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+
+# Secrets
+.env
+.env.*
+*.key
+
+# Operating system files
+.DS_Store
+Thumbs.db
