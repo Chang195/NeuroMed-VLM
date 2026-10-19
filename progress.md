@@ -56,3 +56,24 @@
 - Design a larger, more representative dataset audit.
 - Examine caption tokenization and image preprocessing.
 - Prepare reusable data processing scripts.
+
+## Day 3 — 2026-10-19
+
+**Focus:** Streaming dataset sampling, biomedical tokenization, and PyTorch Dataset.
+
+### Completed
+- Sampled 1,000 ROCOv2 training examples using streaming buffer shuffle (`seed=42`, `buffer_size=5000`).
+- Analyzed caption word counts and BiomedBERT token lengths.
+- Calculated token length percentiles: P50 = 25.5, P90 = 54, P95 = 68, P99 = 94.08.
+- Found that 57/1,000 captions exceed 64 tokens and 2/1,000 exceed 128 tokens.
+- Tentatively selected `max_length=128` for text preprocessing.
+- Loaded the BiomedBERT tokenizer and examined token IDs, special tokens, and attention masks.
+- Successfully performed dynamic padding with a four-caption batch (`[4, 43]`).
+- Implemented a custom PyTorch `MedicalDataset` with `__init__`, `__len__`, and `__getitem__`.
+- Verified that the dataset contains 1,000 samples and correctly returns image, caption, and image ID.
+
+### Next
+- Implement a custom DataLoader and `collate_fn`.
+- Convert PIL images to normalized RGB tensors.
+- Tokenize and dynamically pad captions within batches.
+- Validate image and text batch shapes before model training.
