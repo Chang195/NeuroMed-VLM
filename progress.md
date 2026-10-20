@@ -77,3 +77,35 @@
 - Convert PIL images to normalized RGB tensors.
 - Tokenize and dynamically pad captions within batches.
 - Validate image and text batch shapes before model training.
+
+## Day 4 — 2026-10-20
+
+**Focus:** Multimodal data preprocessing and PyTorch DataLoader.
+
+### Completed
+- Created `02_data_pipeline.ipynb` for reusable multimodal data processing.
+- Implemented image preprocessing: RGB conversion, resizing to 224×224, tensor conversion, and ImageNet normalization.
+- Integrated image transforms into a custom `MedicalDataset`.
+- Implemented a custom `collate_fn` for image stacking and BiomedBERT batch tokenization with dynamic padding.
+- Used `functools.partial` to bind the tokenizer to the collate function.
+- Created a shuffled PyTorch DataLoader with `batch_size=4`.
+- Validated image batches with shape `[4, 3, 224, 224]` and dynamically padded text batches.
+- Successfully iterated through all 250 batches and 1,000 samples without shape assertion errors.
+
+### Key Concepts Learned
+- Sample-level preprocessing vs. batch-level processing
+- `torch.stack()` vs. `torch.cat()`
+- Token IDs, attention masks, and embedding inputs
+- Dataset, DataLoader, and custom collate functions
+- Dynamic padding and shuffled mini-batches
+
+### Next Steps
+- Explore DINOv2 and BiomedBERT model architectures.
+- Load pretrained image and text encoders.
+- Run initial forward passes and inspect embedding dimensions.
+- Verify preprocessing compatibility with pretrained model configurations.
+
+### Known Limitations
+- Current image resizing may distort the original aspect ratio.
+- Dataset sampling and preprocessing are not yet packaged as reusable Python modules.
+- End-to-end model forward passes and image–text pairing integrity remain to be tested.
