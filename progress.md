@@ -109,3 +109,45 @@
 - Current image resizing may distort the original aspect ratio.
 - Dataset sampling and preprocessing are not yet packaged as reusable Python modules.
 - End-to-end model forward passes and image–text pairing integrity remain to be tested.
+
+## Day 5 — 2026-10-21
+
+**Focus:** DINOv2 and BiomedBERT architecture exploration, forward passes, and cross-modal projection.
+
+### Completed
+- Loaded pretrained DINOv2-Small (22.06M parameters).
+- Examined DINOv2 configuration: 12 Transformer layers, 6 attention heads, hidden size 384, patch size 14.
+- Successfully ran DINOv2 forward pass on a 224×224 medical image.
+- Obtained image hidden states with shape `[1, 257, 384]`.
+- Extracted CLS embedding `[1, 384]` and patch embeddings `[1, 256, 384]`.
+- Loaded pretrained BiomedBERT-Base (109.48M parameters).
+- Successfully ran BiomedBERT forward pass, obtaining hidden states `[1, 10, 768]`.
+- Implemented CLS pooling and attention-mask-aware mean pooling.
+- Implemented image projection `384 → 256` and text projection `768 → 256`.
+- Applied L2 normalization and computed cosine similarity between image and text embeddings.
+
+### Key Concepts Learned
+- Self-supervised visual representation learning and teacher–student training
+- Vision Transformer patch embeddings and CLS tokens
+- Transformer layers vs. attention heads
+- Model parameter scaling with hidden dimension
+- `model.eval()`, `torch.no_grad()`, and `requires_grad=False`
+- CLS pooling vs. masked mean pooling
+- Projection heads, L2 normalization, and cosine similarity
+
+### Experimental Results
+- Image embedding: `[1, 256]`
+- Text embedding: `[1, 256]`
+- Both normalized embedding L2 norms: approximately 1
+- Initial cosine similarity: approximately -0.0568 (untrained projection heads; not a meaningful alignment metric)
+
+### Next Steps
+- Organize the two encoders and projection heads into a reusable dual-encoder model.
+- Construct a batch-level image–text similarity matrix.
+- Learn and implement CLIP-style contrastive loss (InfoNCE).
+- Establish an initial training baseline.
+
+### Known Limitations
+- Projection heads are randomly initialized and not yet trained.
+- Encoder preprocessing and pooling choices require controlled evaluation.
+- Current tests validate forward computation, not learned cross-modal alignment.
