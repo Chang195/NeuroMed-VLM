@@ -151,3 +151,35 @@
 - Projection heads are randomly initialized and not yet trained.
 - Encoder preprocessing and pooling choices require controlled evaluation.
 - Current tests validate forward computation, not learned cross-modal alignment.
+
+## Day 6 — 2026-10-22
+
+**Focus:** CLIP-style contrastive learning, gradient computation, and initial training validation.
+
+### Completed
+- Implemented batch-level image–text cosine similarity matrices.
+- Implemented temperature-scaled InfoNCE using cross-entropy.
+- Implemented symmetric Image-to-Text and Text-to-Image CLIP loss.
+- Connected frozen DINOv2 and BiomedBERT encoders to trainable 256-dimensional projection heads.
+- Configured AdamW to update both projection heads.
+- Verified nonzero gradients for both projection heads.
+- Successfully performed a 50-step fixed-batch overfitting test.
+
+### Experimental Results
+- Batch size: 4 image–text pairs
+- Trainable components: Image and Text Projection Heads
+- Frozen components: DINOv2-Small and BiomedBERT-Base
+- Initial fixed-batch CLIP loss: 1.4531
+- Step 25 loss: 0.4315
+- Step 50 loss: 0.0403
+- Loss reduction: approximately 97.2%
+
+### Interpretation
+The training pipeline is differentiable, and the projection heads can optimize image–text alignment on a fixed batch. This validates the basic training mechanism but does not establish generalization to unseen medical data.
+
+### Next Steps
+- Refactor the prototype into reusable model and training modules.
+- Create reproducible training and validation splits.
+- Check for duplicate image IDs and potential false negatives.
+- Establish a retrieval evaluation baseline with Recall@K.
+- Begin controlled multi-batch training experiments.
