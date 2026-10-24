@@ -183,3 +183,46 @@ The training pipeline is differentiable, and the projection heads can optimize i
 - Check for duplicate image IDs and potential false negatives.
 - Establish a retrieval evaluation baseline with Recall@K.
 - Begin controlled multi-batch training experiments.
+
+## Day 7 — 2026-10-24
+
+**Focus:** Dataset integrity, retrieval evaluation, and multi-epoch CLIP training.
+
+### Completed
+- Adopted official ROCOv2 train/validation/test splits.
+- Used 1,000 training samples and 200 validation samples.
+- Verified no duplicate image IDs or exact RGB pixel hashes in the sampled data.
+- Implemented Image-to-Text and Text-to-Image Recall@K.
+- Evaluated a full 200 × 200 image–text similarity matrix.
+- Extended the CLIP training loop to multiple epochs.
+- Compared validation retrieval performance before and after training.
+
+### Experimental Results
+
+| Metric | Before | After |
+|---|---:|---:|
+| I2T Recall@1 | 5.5% | 7.5% |
+| I2T Recall@5 | 20.5% | 33.0% |
+| I2T Recall@10 | 29.0% | 47.5% |
+| T2I Recall@1 | 5.5% | 5.0% |
+| T2I Recall@5 | 18.5% | 28.5% |
+| T2I Recall@10 | 30.5% | 49.0% |
+
+Training duration: approximately 11 minutes 30 seconds.
+
+### Interpretation
+Training improved Recall@5 and Recall@10 in both directions, while Recall@1 remains limited. The experiment demonstrates measurable improvement on the sampled validation set, but broader generalization and robustness remain unverified.
+
+### Known Limitations
+- Small contrastive batch size (4).
+- Frozen pretrained encoders; only projection heads trained.
+- No systematic hyperparameter comparison.
+- Pre-training baseline model state and training history need clearer checkpoint tracking.
+- Model training and evaluation code remain notebook-based.
+
+### Next Steps — Day 8
+- Add tqdm progress bars and epoch-average loss logging.
+- Refactor training and evaluation code into reusable functions.
+- Save and load reproducible model checkpoints.
+- Establish a controlled retrieval baseline.
+- Prepare for parameter-efficient fine-tuning experiments.
