@@ -226,3 +226,26 @@ Training improved Recall@5 and Recall@10 in both directions, while Recall@1 rema
 - Save and load reproducible model checkpoints.
 - Establish a controlled retrieval baseline.
 - Prepare for parameter-efficient fine-tuning experiments.
+
+## Day 8 — 2026-10-25
+
+**Focus:** Modular training pipeline and reproducible experiment recovery.
+
+### Completed
+- Restored Day 7 projection head weights and AdamW optimizer state.
+- Verified restored parameters exactly match saved checkpoint values.
+- Implemented `src/train.py` with `train_one_epoch()`.
+- Added tqdm progress reporting and sample-weighted epoch-average loss.
+- Refactored `MedicalDataset`, `collate_fn`, and DataLoader creation into `src/dataset.py`.
+- Reconstructed the ROCOv2 training DataLoader (1,000 samples, 250 batches).
+- Completed one-batch training smoke test (loss ≈ 0.1152).
+- Verified both test projection heads were updated while the original Day 7 weights remained unchanged.
+- Implemented `recall_at_k()` and `evaluate_retrieval()` in `src/evaluate.py`.
+- Verified retrieval metrics with an identity-matrix test (all Recall@K = 1.0).
+
+### Pending — Day 9
+- Implement `extract_embeddings()` in `src/evaluate.py`.
+- Reconstruct the official ROCOv2 validation DataLoader (200 samples).
+- Run end-to-end retrieval evaluation.
+- Verify results against the Day 7 benchmark.
+- Commit further evaluation improvements and document reproducibility limitations.
